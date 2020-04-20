@@ -4,7 +4,7 @@
 
 ### Installation
 
-Having had an earlier version, just unpack the zip and check registry values.
+Having had an earlier version, just unpack the Arduino IDE zip and check registry values.
 
 ### settings (file->settings)
 
@@ -30,15 +30,34 @@ Identifying placement of Arduino.h and subsequent from included there
     
     #include "binary.h"
 
-tre include libraries. Cross referene by links:
+tre include libraries. Cross referensed by links:
 
 - quote_inlude
 - gcc_include
 - avr_include
 
-link arduino.exe
+link to arduino.exe
 
-### links of interests
+hyperterminal settings
 
-## [arduino reference](https://www.arduino.cc/reference/en/)
+- emulering
+    - tty
+- ascii transmit
+    - send newline
+    - local echo
+- ascii recieve
+    - add newline
+
+
+### Libraries
+
+##### cmdLoop
+
+Loop that servers running a command as serial request and still calls a function repeatedly 
+
+
+
+### Links of interests
+
+##### [arduino reference](https://www.arduino.cc/reference/en/)
 
