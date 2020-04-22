@@ -13,9 +13,9 @@ Having had an earlier version, just unpack the Arduino IDE zip and check registr
 
 ### shortcut in root of Sketchbook
 
-Seems no harme to use root of Sketchbook as links collection as any Sketch/Library goes in subfolders.
+Seems no harme to use root of Sketchbook as links collection as any Sketches/Libraries goes in subfolders.
 
-Identifying placement of Arduino.h and subsequent from included there
+Identifying placement of Arduino.h and subsequent places from where they are included.
 
 #### lines 23-32
 
@@ -30,7 +30,7 @@ Identifying placement of Arduino.h and subsequent from included there
     
     #include "binary.h"
 
-tre include libraries. Cross referensed by links:
+Naming the tre include libraries links residing in Sketchbook and cross referensed in there back to Sketchbook root.
 
 - quote_inlude
 - gcc_include
@@ -38,7 +38,7 @@ tre include libraries. Cross referensed by links:
 
 link to arduino.exe
 
-hyperterminal settings
+hyperterminal - settings of shorcut
 
 - emulering
     - tty
@@ -54,6 +54,17 @@ hyperterminal settings
 ##### cmdLoop
 
 Loop that servers running a command as serial request and still calls a function repeatedly 
+
+##### sendf
+
+We can't be that verbose
+
+    Serial.print("the air temperature is ");
+    Serial.print(airTemp);
+    Serial.println(" degrees.");
+
+The format facilities of printf must be implemented! A quick test and following internet seach reveals that printf and is't cousins, as standard setup in arduini IDE, don't include formating floats.
+Instead of envestigating the cost of changing compilig switches, we simple makes some worarounds which price in RAM usage i obvious.
 
 
 
