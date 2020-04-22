@@ -63,8 +63,8 @@ We can't be that verbose
     Serial.print(airTemp);
     Serial.println(" degrees.");
 
-The format facilities of printf must be implemented! A quick test and following internet seach reveals that printf and is't cousins, as standard setup in arduini IDE, don't include formating floats.
-Instead of envestigating the cost of changing compilig switches, we simple makes some worarounds which price in RAM usage i obvious.
+The format facilities of printf must be implemented! A quick test and following internet seach reveals that printf and is't cousins, as standard setup in arduino IDE, don't include formating floats.
+Instead of envestigating the cost of changing compilig switches, we simple makes some worarounds which price in RAM usage is obvious.
 
 
 
