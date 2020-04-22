@@ -6,12 +6,12 @@
 
 Having had an earlier version, just unpack the Arduino IDE zip and check registry values.
 
-### settings (file->settings)
+### Settings (file->settings)
 
 - Sketchbook folder
 - enable verbose output 
 
-### shortcut in root of Sketchbook
+### Shortcut in root of Sketchbook
 
 Seems no harme to use root of Sketchbook as links collection as any Sketches/Libraries goes in subfolders.
 
