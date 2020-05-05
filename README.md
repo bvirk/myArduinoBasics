@@ -1,74 +1,68 @@
-# Customisation and needed library
+### Inital Arduino development steps
+The _why_ about subjects, that is felt needed to give the energi and focus of identity, is described in whyXXX.md files. 
 
-1.8.9 on windows xp. Someone must certainly earlier have taken the steps I do here, but It just lies aheah.
+This README is a sequence of _what_.
+
 
 ### Installation
 
-Having had an earlier version, just unpack the Arduino IDE zip and check registry values.
+1.8.9 on windows xp. Having had an earlier version, the Arduino IDE zip was unpacked and registry values checked.
 
-### Settings (file->settings)
-
-- Sketchbook folder
-- enable verbose output 
-
-### Shortcut in root of Sketchbook
-
-Seems no harme to use root of Sketchbook as links collection as any Sketches/Libraries goes in subfolders.
-
-Identifying placement of Arduino.h and subsequent places from where they are included.
-
-#### lines 23-32
-
-    #include <stdlib.h>
-    #include <stdbool.h>
-    #include <string.h>
-    #include <math.h>
+### Setup
+- IDE preferences
+    - sketchbook folder
+    - + verbose output
+    - + external editor
+    - - check for update (no  internet)
     
-    #include <avr/pgmspace.h>
-    #include <avr/io.h>
-    #include <avr/interrupt.h>
-    
-    #include "binary.h"
+- Links in root of Sketchbook folder
+    - inlude files ( traced by Arduino.h (
+        - quote_inlude
+        - gcc_include
+        - avr_include
+    - arduino.exe
+    - hyperterminal
+        - emulering
+            - tty
+        - ascii transmit
+            - send newline
+            - local echo
+        - ascii recieve
+            - add newline
+    - preferences
+        - console.lines=20
 
-Naming the tre include libraries links residing in Sketchbook and cross referensed in there back to Sketchbook root.
 
-- quote_inlude
-- gcc_include
-- avr_include
+### Reading include files in Jedit Editor with plugin 'Error List' (and Console)
 
-link to arduino.exe
+Macro cyberkis invokes searching 3 directories for the marked word.
 
-hyperterminal - settings of shorcut
+    void searchDirectories(String word, String [] dirs) {
+        for (String dir : dirs) {				
+            SearchAndReplace.setSearchString(word);
+            SearchAndReplace.setAutoWrapAround(false);
+            SearchAndReplace.setReverseSearch(false);
+            SearchAndReplace.setWholeWord(false);
+            SearchAndReplace.setIgnoreCase(false);
+            SearchAndReplace.setRegexp(false);
+            SearchAndReplace.setSearchFileSet(new DirectoryListSet(dir,"*",true));
+            SearchAndReplace.hyperSearch(view,false);
+        }
+	}
 
-- emulering
-    - tty
-- ascii transmit
-    - send newline
-    - local echo
-- ascii recieve
-    - add newline
+    searchDirectories (kiss, new String[] { 
+             "C:/Programmer/arduino-1.8.9/hardware/tools/avr/lib/gcc/avr/5.4.0/include"
+            ,"C:/Programmer/arduino-1.8.9/hardware/tools/avr/avr/include"
+            ,"C:/Programmer/arduino-1.8.9/hardware/arduino/avr/cores/arduino"});
+
 
 
 ### Libraries
 
-##### cmdLoop
-
-Loop that servers running a command as serial request and still calls a function repeatedly 
-
-##### sendf
-
-We can't be that verbose
-
-    Serial.print("the air temperature is ");
-    Serial.print(airTemp);
-    Serial.println(" degrees.");
-
-The format facilities of printf must be implemented! A quick test and following internet seach reveals that printf and is't cousins, as standard setup in arduino IDE, don't include formating floats.
-Instead of envestigating the cost of changing compilig switches, we simple makes some worarounds which price in RAM usage is obvious.
+- sendf
+- cmdLoop
 
 
+### Links
 
-### Links of interests
-
-##### [arduino reference](https://www.arduino.cc/reference/en/)
-
+[every mans doc]((https://www.arduino.cc/reference/en/)
