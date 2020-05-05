@@ -12,7 +12,7 @@ Why isn't there a sendf in Arduino? We are not printing, we are sending. Two or 
     
 It cost's to use something that is evaluated runtime, ram for buffering and clockcycles for processing. Things have to be quantified and use selective.
     
-A full blown sendf would properly implment all %f specifier of printf using varaidic templates of C++11 - I am too lazy to try that.
+A full blown sendf would properly implement all %f specifier of printf using varaidic templates of C++11 - I am too lazy to try that.
 
 A quick test and following internet seach reveals that printf and is't cousins, as standard setup in arduino IDE, don't include formating floats.
 
