@@ -5,9 +5,10 @@ Programming is power at our fingertips - using expressions of some condensed exp
     Serial.println(" degrees.");
 
 Why isn't there a sendf in Arduino? We are not printing, we are sending. Two or three thing that properbly got hand in hand.
-    - easy to understand 1 paramter functions
-    - nice reference implementation of classes Print,Stream and HardwareSerial
-    - uses flash in favour of ram - especially when F("the air temperature is ") is used
+
+- easy to understand 1 paramter functions
+- nice reference implementation of classes Print,Stream and HardwareSerial
+- uses flash in favour of ram - especially when F("the air temperature is ") is used
     
 It cost's to use something that is evaluated runtime, ram for buffering and clockcycles for processing. Things have to be quantified and use selective.
     
