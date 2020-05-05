@@ -11,12 +11,12 @@ This README is a sequence of _what_.
 ### Setup
 - IDE preferences
     - sketchbook folder
-    - + verbose output
-    - + external editor
-    - - check for update (no  internet)
+    - +verbose output
+    - +external editor
+    - -check for update (no  internet)
     
 - Links in root of Sketchbook folder
-    - inlude files ( traced by Arduino.h (
+    - inlude files ( traced by Arduino.h )
         - quote_inlude
         - gcc_include
         - avr_include
@@ -65,4 +65,4 @@ Macro cyberkis invokes searching 3 directories for the marked word.
 
 ### Links
 
-[every mans doc]((https://www.arduino.cc/reference/en/)
+[every mans doc](https://www.arduino.cc/reference/en/)
