@@ -1,26 +1,6 @@
 #include <CmdLoop.h>
 #include <Sendf.h>
-/*
-void hexdump(const char *p, int size) {
-	sendf("Address    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n");
-	char ascii[0x11];
-	ascii[0x10]='\0';
-	for (unsigned int lineStart = (unsigned int)p & 0xfff0; lineStart < (unsigned int)p+size; lineStart += 0x10) {
-		//printHex(lineStart,8,": ");
-		sendf("%.8x: ",lineStart);
-		for (int8_t col=0; col < 0x10; col++) 
-			if (lineStart+col < (unsigned int)p || lineStart+col >= (unsigned int)p+size) {
-				sendf(" . ");
-				ascii[col]='.';
-			} else {
-				char dumpCh = *(char *)(lineStart+col);
-				sendf("%.2x ",dumpCh);
-				ascii[col] = dumpCh < 0x20 ? '.' : dumpCh;
-			}
-		sendf(" |%s|\n",ascii);
-	}
-}
-*/
+
 namespace slices {
 	uint16_t onTime=2100;
 	uint16_t offTime=100;
@@ -98,7 +78,7 @@ void setup() {
 	Serial.begin(9600);
 	pinMode(13,OUTPUT);
 	sendf("command loop v0.2\n");
-	sendff("i am %.2f procent sure\n",102.22);
+	sendf("command: help for viewing commands\n");
 	cmdLoop.loop();
 }
 
