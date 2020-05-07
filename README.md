@@ -65,6 +65,6 @@ Macro cyberkis invokes searching 3 directories for the marked word.
 
 ### Links
 
-[every mans doc](https://www.arduino.cc/reference/en/)
-[avr-libc](https://www.nongnu.org/avr-libc/user-manual/modules.html)
-[Question about memory allocation analysis](https://arduino.stackexchange.com/questions/52921/question-about-memory-allocation-analysis?rq=1)
+- [every mans doc](https://www.arduino.cc/reference/en/)
+- [avr-libc](https://www.nongnu.org/avr-libc/user-manual/modules.html)
+- [Question about memory allocation analysis](https://arduino.stackexchange.com/questions/52921/question-about-memory-allocation-analysis?rq=1)
