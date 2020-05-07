@@ -11,7 +11,25 @@ char double_text[0xf];
 
 int8_t sendf(const char * fmt, ...) {
 	va_list args;
+	//Serial.println("in sendf variadic");
 	va_start(args, fmt);
+	
+	int8_t len = min(vsnprintf(sendf_text, sendf_textSize, fmt, args), sendf_textSize);
+	va_end(args);
+	sendf_text[len] = '\0'; 
+	Serial.print(sendf_text);
+	return len;
+}
+
+int8_t sendf(const __FlashStringHelper *ffmt, ...) {
+	va_list args;
+	va_start(args, ffmt);
+	
+	PGM_P p = reinterpret_cast<PGM_P>(ffmt);
+	uint8_t flen = strnlen_P(p,0x40);
+	char fmt[flen+1];
+	strncpy_P(fmt,p,flen+1);
+	fmt[flen] = '\0';
 	
 	int8_t len = min(vsnprintf(sendf_text, sendf_textSize, fmt, args), sendf_textSize);
 	va_end(args);
@@ -30,6 +48,14 @@ inline char * dtostrf(double d, uint8_t prec) {
 
 char * (*toStr[])(double, uint8_t) = {dtostre,dtostrf};
 
+/**
+  * First %[.d]e or &[.d]f flowing point format code
+  *
+  * @param fmt to be searched for %[.d]e or &[.d]f strings at start
+  * @return -1 for not  %[.d]e or &[.d]f at start of fmt or else
+  *	bit0-2 : precision (0-7), bit 3-4: length of (2 or 4 depend on eg. %f or %.4f), bit 5: 0=e, 1=f 
+  *	scientific vs decimal number
+  */
 inline int8_t typeLengthPrecision(const char * fmt) {
 #define DOUBLE_DEFAULT_PRECISION 2
     if (*fmt == '%')
@@ -46,6 +72,52 @@ inline int8_t typeLengthPrecision(const char * fmt) {
 int8_t sendff(const char * fmt, ...) {
 	va_list args;
     va_start(args, fmt);
+       
+    const char *beg = fmt;
+    const char *end = fmt;
+    char *dest = sendf_text;
+    int8_t precsn;
+
+    while(*end) {
+        while (*end && (precsn=typeLengthPrecision(end)) == -1)            
+            end++;
+        if (end > beg) { // move, not format specifier containing text 
+            memmove(dest,beg,end-beg);
+            if (*end == '\0')
+            	*(dest+(end-beg))= '\0';
+        }
+        if (*end) {
+            dest += end-beg;
+            double d = va_arg(args,double);
+            double dAbs = abs(d);
+            int isFmtSpecF = precsn >> 6;
+            uint8_t preci = precsn & 7;
+            if (isFmtSpecF && (dAbs > 9999999*pow(10,-preci) || dAbs < pow(10,preci-8)))
+            	isFmtSpecF=0;
+            char *flt =  (toStr[isFmtSpecF])(d,preci);
+            int fltlen = strlen(flt);
+            memmove(dest,flt,fltlen);
+            dest +=fltlen;
+            end += (precsn >> 3) & 6;
+            beg=end;
+            if (*end == '\0')
+            	*dest='\0';
+        }
+    }
+    va_end(args);
+    Serial.print(sendf_text);
+    return strlen(sendf_text);
+}
+
+int8_t sendff(const __FlashStringHelper *ffmt, ...) {
+	va_list args;
+    va_start(args, ffmt);
+    
+   	PGM_P p = reinterpret_cast<PGM_P>(ffmt);
+	uint8_t flen = strnlen_P(p,0x40);
+	char fmt[flen+1];
+	strncpy_P(fmt,p,flen+1);
+	fmt[flen] = '\0';
     
     const char *beg = fmt;
     const char *end = fmt;

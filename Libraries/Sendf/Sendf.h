@@ -2,17 +2,21 @@
 	Serial versions of standard C printf.
 */
 
+#ifndef Sendf_h
+#define Sendf_h
+
+
 //! Serial 'printf' for NON float or double variadic arguments. 
 /*
   A fixed buffer af length 0x40 bytes is used - the formatted stream will maximal be 0x3f bytes long. Care is taken not to overflow, 
   as it is vsnprintf that is used.
 
-  \param fmt is like the format string of printf, except %e and %f must not be used
-  \param variadic arguments can not be of type float or double.
-  \return length of sendt stream.
+  /param fmt is like the format string of printf, except %e and %f must not be used
+  /param variadic arguments can not be of type float or double.
+  /return length of sendt stream.
 */
 int8_t sendf(const char * fmt, ...);
-
+int8_t sendf(const __FlashStringHelper *ffmt, ...);
 
 //! Serial 'printf' for ONLY float or double variadic arguments. 
 /*
@@ -27,12 +31,12 @@ int8_t sendf(const char * fmt, ...);
   
   In that way it is adequate, given no higher precision than 7, to offer dtostre or dtostrf a 0xf bytes buffer.  
 
-  \param fmt is like the format string of printf, except only %e and %f format specifiers must be used.
-  \param variadic arguments can only be of type float or double.
-  \return length of sendt stream.
+  /param fmt is like the format string of printf, except only %e and %f format specifiers must be used.
+  /param variadic arguments can only be of type float or double.
+  /return length of sendt stream.
 */
 int8_t sendff(const char * fmt, ...);
-
+int8_t sendff(const __FlashStringHelper *ffmt, ...);
 
 //! convert, in scientific notation, float or double to char *
 /*
@@ -45,7 +49,6 @@ int8_t sendff(const char * fmt, ...);
 */
 inline char * dtostre(double d, uint8_t prec);
 
-
 //! convert, in decimal notation, float or double to char *
 /*
   This an overload of stdlib char * dtostrf(... using a dedicated buffer and a width parameter which is 0. Care must to taken
@@ -56,3 +59,5 @@ inline char * dtostre(double d, uint8_t prec);
   \return char buffer of converted value
 */
 inline char * dtostrf(double d, uint8_t prec);
+
+#endif
