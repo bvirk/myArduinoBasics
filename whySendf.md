@@ -18,3 +18,8 @@ A quick test and following internet seach reveals that printf and is't cousins, 
 
 Instead of envestigating the cost of changing compilig switches, we simple makes some worarounds which price in RAM usage is obvious.
 
+To be able to overload for flashing the format string seemed affordable - implementing a non standard conversion specifier for - let say %S - for doing
+
+    sendf("%S<n",F("I m flashed"));
+    
+is left to when need occures - the example makes no sense it itself because the string is litteral 
