@@ -22,4 +22,4 @@ To be able to overload for flashing the format string seemed affordable - implem
 
     sendf("%S<n",F("I m flashed"));
     
-is left to when need occures - the example makes no sense it itself because the string is litteral 
+is left to when need occures - the example makes no sense it itself because the string is litteral.
