@@ -66,6 +66,7 @@ class CmdLoop {
   	
   	//! makes  previous slice the one that is called next.
   	void prev();
+  	
 };
 	
 #endif

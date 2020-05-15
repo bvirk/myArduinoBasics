@@ -15,7 +15,7 @@ int8_t pin13State=0;
 
   CmdLoop::CmdLoop( CommandFunc * cmdFunc, uint8_t commandsCount, void (*tslice[])(CmdLoop &), uint8_t tsliceCount) 
   	: cmdFuncs(cmdFunc),cmdsCount(commandsCount),forRepeatSaved('\0')
-  	,sliceDelay(defaultDelay),timeSlices(tslice),timeSlicesCount(tsliceCount),timeSliceIndex(0) {
+  	,sliceDelay(defaultDelay),timeSlices(tslice),timeSlicesCount(tsliceCount),timeSliceIndex(0){
 	sliceStart = millis();
 	argv[0]=command;
 	
