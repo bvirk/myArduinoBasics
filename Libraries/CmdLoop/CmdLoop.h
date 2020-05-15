@@ -2,25 +2,28 @@
 #define CmdLoop_h
 
 struct CommandFunc {
-		const char *name;
-		uint8_t (*f)(int,char**);
+		int8_t (*f)(int,char**);
+		const char * name;
 }; 
 
 	
 /**
   * Simultaniously Retrieves command from serial and invoke named command, and
-  * run function timeSlice()
+  * run function timeSlice()  
   */
 class CmdLoop {
 	#define COMMAND_SIZE 64
-	char command[COMMAND_SIZE];	//! buffer seriel input as that line that get '\0' bytes to split in args
-	#define MAX_ARG_COUNT 6		
+	char command[COMMAND_SIZE];		//! buffer seriel input as that line that get '\0' bytes to split in args
+	#define MAX_ARG_COUNT 6
+	
+	char forRepeatSaved;			//! A single char in command[0] acts as repeat last, replacing command[0] 
+									//! with the prior saved command[0] as forRepeatSaved
 	
 	uint8_t argc;					//! detected numbers of arguments
 	char *argv[MAX_ARG_COUNT];		//! array of pointer to '\0' bytes terminatet string(s) in command
 	CommandFunc *cmdFuncs;			//! pointer to first item in array of struct CommandFunc's
 	uint8_t cmdsCount;
-	uint8_t exitLevel;				//! exitlevel of last executed command
+	int8_t exitLevel;				//! exitlevel of last executed command
 	
 	void (**timeSlices)(CmdLoop &);	//! Array of pointers to timeSlice functions
 	uint8_t timeSlicesCount;
