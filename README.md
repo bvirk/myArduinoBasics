@@ -37,24 +37,24 @@ This README is a sequence of _what_.
 
 Macro cyberkis invokes searching 3 directories for the marked word.
 
-    void searchDirectories(String word, String [] dirs) {
-        for (String dir : dirs) {				
-            SearchAndReplace.setSearchString(word);
-            SearchAndReplace.setAutoWrapAround(false);
-            SearchAndReplace.setReverseSearch(false);
-            SearchAndReplace.setWholeWord(false);
-            SearchAndReplace.setIgnoreCase(false);
-            SearchAndReplace.setRegexp(false);
-            SearchAndReplace.setSearchFileSet(new DirectoryListSet(dir,"*",true));
-            SearchAndReplace.hyperSearch(view,false);
-        }
+void searchDirectories(String word, boolean useRegex, String [] dirs) {
+	for (String dir : dirs) {				
+		SearchAndReplace.setSearchString(word);
+		SearchAndReplace.setAutoWrapAround(false);
+		SearchAndReplace.setReverseSearch(false);
+		SearchAndReplace.setWholeWord(false);
+		SearchAndReplace.setIgnoreCase(false);
+		SearchAndReplace.setRegexp(useRegex);
+		SearchAndReplace.setSearchFileSet(new DirectoryListSet(dir,"*.h",true));
+		SearchAndReplace.hyperSearch(view,false);
 	}
+}
 
-    searchDirectories (kiss, new String[] { 
-             "C:/Programmer/arduino-1.8.9/hardware/tools/avr/lib/gcc/avr/5.4.0/include"
-            ,"C:/Programmer/arduino-1.8.9/hardware/tools/avr/avr/include"
-            ,"C:/Programmer/arduino-1.8.9/hardware/arduino/avr/cores/arduino"});
-
+    ...
+    case "find in includes" :
+	case "regex find in includes" :
+	    boolean useRegex = choice.equals("regex find in includes");
+        searchDirectories (kiss, useRegex, new String[] {"C:/Programmer/arduino-1.8.9/hardware" });
 
 
 ### Libraries
