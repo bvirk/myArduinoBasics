@@ -84,7 +84,8 @@ void CmdLoop::prev() {
 }
 
 void CmdLoop::loop() {
-	strcpy_P(command,reinterpret_cast<PGM_P>(F("autoexec")));
+	PGM_P autoExec = reinterpret_cast<PGM_P>(F("autoexec"));
+	strcpy_P(command,autoExec);
 	argc=1;
 	while (true) {
 		uint8_t cmdsPos;
@@ -94,7 +95,7 @@ void CmdLoop::loop() {
 		  	  sendf(F(" %d\n"),exitLevel);
 		  	  break;
 		  }
-		if (cmdsPos == cmdsCount)
+		if (cmdsPos == cmdsCount && strcmp_P(argv[0],autoExec))
 			sendf(F("Command not found: %s\n"),command );
 		getCmdAndTimeSlice();
 	}
