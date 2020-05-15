@@ -31,7 +31,7 @@ namespace cmdFuncs {
 			TimedErrorLog ts;
 			ts.setError(atoi(argv[1]));
 			ts.show(TimedErrorLog::ERROR);
-			slices::onTime=200;
+			slices::onTime=100;
 			return 0;
 		}
 		return -1;
@@ -79,22 +79,6 @@ namespace cmdFuncs {
 		return -1;
 	}
 		
-	void eepromDump(uint16_t start, uint16_t length) {
-		sendf(F("Address    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n"));
-		char ascii[0x11];
-		ascii[0x10]='\0';
-		for (uint16_t lineStart = start & 0x3f0; (lineStart < 0x400) && (lineStart < start+length); lineStart += 0x10) {
-			//printHex(lineStart,8,": ");
-			sendf(F("%.8x: "),lineStart);
-			for (int8_t col=0; col < 0x10; col++) { 
-					uint8_t dumpCh = EEPROM.read(lineStart+col);
-					sendf(F("%.2x "),dumpCh);
-					ascii[col] = dumpCh < 0x20 ? '.' : dumpCh;
-				}
-			sendf(F(" |%s|\n"),ascii);
-		}
-	}
-	
 	int8_t EEDump(int argc, char* argv[]) {
 		uint16_t start = 0;
 		uint16_t len = 0x400;
@@ -102,7 +86,7 @@ namespace cmdFuncs {
 			start = strtol(argv[1],0,16);
 		if (argc > 2)
 			len = strtol(argv[2],0,16);
-		eepromDump(start,len);
+		Utils::eepromDump(start,len);
 		return 0;
 	}
 
@@ -184,8 +168,10 @@ namespace cmdFuncs {
   
   int8_t  list(int argc, char *argv[]) {
   	  sendf(F("Available commands:\n\n"));
+  	  PGM_P autoExec = reinterpret_cast<PGM_P>(F("autoexec"));
   	  for (int i=0; i < sizeof(commands)/sizeof(commands[0]); i++)
-  	  	  sendf(F("\t%s\n"),commands[i].name);
+  	  	  if (strcmp_P(commands[i].name,autoExec))
+  	  	  	sendf(F("\t%s\n"),commands[i].name);
   	  return 0;
   }
 };

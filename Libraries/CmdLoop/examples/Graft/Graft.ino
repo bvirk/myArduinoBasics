@@ -28,4 +28,5 @@ ino files
 #include "TimedErrorLog.h"
 #include <avr/pgmspace.h>
 #include "Templates.h"
+#include "Utils.h"
 
