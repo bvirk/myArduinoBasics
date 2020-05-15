@@ -33,23 +33,24 @@ This README is a sequence of _what_.
         - console.lines=20
 
 
-### Reading include files in Jedit Editor with plugin 'Error List' (and Console)
+### Reading include files in Jedit Editor with plugin 'Error List'
 
-Macro cyberkis invokes searching 3 directories for the marked word.
+Macro cyberkis, with marked word, calls:
 
-void searchDirectories(String word, boolean useRegex, String [] dirs) {
-	for (String dir : dirs) {				
-		SearchAndReplace.setSearchString(word);
-		SearchAndReplace.setAutoWrapAround(false);
-		SearchAndReplace.setReverseSearch(false);
-		SearchAndReplace.setWholeWord(false);
-		SearchAndReplace.setIgnoreCase(false);
-		SearchAndReplace.setRegexp(useRegex);
-		SearchAndReplace.setSearchFileSet(new DirectoryListSet(dir,"*.h",true));
-		SearchAndReplace.hyperSearch(view,false);
-	}
-}
+    void searchDirectories(String word, boolean useRegex, String [] dirs) {
+        for (String dir : dirs) {				
+            SearchAndReplace.setSearchString(word);
+            SearchAndReplace.setAutoWrapAround(false);
+            SearchAndReplace.setReverseSearch(false);
+            SearchAndReplace.setWholeWord(false);
+            SearchAndReplace.setIgnoreCase(false);
+            SearchAndReplace.setRegexp(useRegex);
+            SearchAndReplace.setSearchFileSet(new DirectoryListSet(dir,"*.h",true));
+            SearchAndReplace.hyperSearch(view,false);
+        }
+    }
 
+when invoked with marked string of characters by:
     ...
     case "find in includes" :
 	case "regex find in includes" :
@@ -59,8 +60,11 @@ void searchDirectories(String word, boolean useRegex, String [] dirs) {
 
 ### Libraries
 
-- sendf
-- cmdLoop
+- Sendf
+- CmdLoop
+- Utils
+- Templates
+- TimedErrorLog
 
 
 ### Links
