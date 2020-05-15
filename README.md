@@ -35,7 +35,7 @@ This README is a sequence of _what_.
 
 ### Reading include files in Jedit Editor with plugin 'Error List'
 
-Macro cyberkis, with marked word, calls:
+Macro cyberkis calls:
 
     void searchDirectories(String word, boolean useRegex, String [] dirs) {
         for (String dir : dirs) {				
@@ -50,7 +50,8 @@ Macro cyberkis, with marked word, calls:
         }
     }
 
-when invoked with marked string of characters by:
+when invoked with marked string of characters, by:
+    
     ...
     case "find in includes" :
 	case "regex find in includes" :
