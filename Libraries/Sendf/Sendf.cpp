@@ -1,23 +1,30 @@
-#include "Arduino.h"
+#include <stdint-gcc.h>
+#include <stdlib.h>
+#include <avr/pgmspace.h>
+#include <HardwareSerial.h>
 #include "Sendf.h"
 #include <stdarg.h>
 #include <stdio.h>
+#include <math.h>
+
+#define min(a,b) ((a)<(b)?(a):(b))
 
 const int8_t sendf_textSize=0x3f;
 char sendf_text[0x40];
 char double_text[0xf];
 
-
+inline int8_t sendfCommon(const char * fmt, va_list args) {
+	int8_t len = min(vsnprintf(sendf_text, sendf_textSize, fmt, args), sendf_textSize);
+	sendf_text[len] = '\0'; 
+	Serial.print(sendf_text);
+	return len;
+}
 
 int8_t sendf(const char * fmt, ...) {
 	va_list args;
-	//Serial.println("in sendf variadic");
 	va_start(args, fmt);
-	
-	int8_t len = min(vsnprintf(sendf_text, sendf_textSize, fmt, args), sendf_textSize);
+	int8_t len = sendfCommon(fmt,args);
 	va_end(args);
-	sendf_text[len] = '\0'; 
-	Serial.print(sendf_text);
 	return len;
 }
 
@@ -31,12 +38,11 @@ int8_t sendf(const __FlashStringHelper *ffmt, ...) {
 	strncpy_P(fmt,p,flen+1);
 	fmt[flen] = '\0';
 	
-	int8_t len = min(vsnprintf(sendf_text, sendf_textSize, fmt, args), sendf_textSize);
+	int8_t len = sendfCommon(fmt,args);
 	va_end(args);
-	sendf_text[len] = '\0'; 
-	Serial.print(sendf_text);
 	return len;
 }
+
 
 inline char * dtostre(double d, uint8_t prec) {
 	return dtostre(d,double_text,prec > 7 ? 7 : prec,true);
@@ -69,9 +75,7 @@ inline int8_t typeLengthPrecision(const char * fmt) {
     return -1;
 }
 
-int8_t sendff(const char * fmt, ...) {
-	va_list args;
-    va_start(args, fmt);
+inline int8_t sendffCommon(const char * fmt, va_list args) {
        
     const char *beg = fmt;
     const char *end = fmt;
@@ -104,9 +108,16 @@ int8_t sendff(const char * fmt, ...) {
             	*dest='\0';
         }
     }
-    va_end(args);
     Serial.print(sendf_text);
     return strlen(sendf_text);
+}
+
+int8_t sendff(const char * fmt, ...) {
+	va_list args;
+	va_start(args, fmt);
+	int8_t len = sendffCommon(fmt,args);
+	va_end(args);
+	return len;
 }
 
 int8_t sendff(const __FlashStringHelper *ffmt, ...) {
@@ -119,38 +130,8 @@ int8_t sendff(const __FlashStringHelper *ffmt, ...) {
 	strncpy_P(fmt,p,flen+1);
 	fmt[flen] = '\0';
     
-    const char *beg = fmt;
-    const char *end = fmt;
-    char *dest = sendf_text;
-    int8_t precsn;
-
-    while(*end) {
-        while (*end && (precsn=typeLengthPrecision(end)) == -1)            
-            end++;
-        if (end > beg) { // move, not format specifier containing text 
-            memmove(dest,beg,end-beg);
-            if (*end == '\0')
-            	*(dest+(end-beg))= '\0';
-        }
-        if (*end) {
-            dest += end-beg;
-            double d = va_arg(args,double);
-            double dAbs = abs(d);
-            int isFmtSpecF = precsn >> 6;
-            uint8_t preci = precsn & 7;
-            if (isFmtSpecF && (dAbs > 9999999*pow(10,-preci) || dAbs < pow(10,preci-8)))
-            	isFmtSpecF=0;
-            char *flt =  (toStr[isFmtSpecF])(d,preci);
-            int fltlen = strlen(flt);
-            memmove(dest,flt,fltlen);
-            dest +=fltlen;
-            end += (precsn >> 3) & 6;
-            beg=end;
-            if (*end == '\0')
-            	*dest='\0';
-        }
-    }
-    va_end(args);
-    Serial.print(sendf_text);
-    return strlen(sendf_text);
+	int8_t len = sendffCommon(fmt,args);
+	va_end(args);
+	return len;
 }
+

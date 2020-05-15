@@ -1,8 +1,8 @@
 #include "Sendf.h"
 
 void setup() {
-	Serial.begin(9600);
-	sendf("command loop v0.1\n");
+	Serial.begin(115200);
+	sendf("sendf example\n");
 
 	int maxlen = -1;
 	char fmt[] = "%.pf";

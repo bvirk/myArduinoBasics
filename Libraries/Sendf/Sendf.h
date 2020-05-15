@@ -4,7 +4,7 @@
 
 #ifndef Sendf_h
 #define Sendf_h
-
+#include <WString.h>
 
 //! Serial 'printf' for NON float or double variadic arguments. 
 /*
