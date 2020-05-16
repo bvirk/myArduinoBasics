@@ -14,6 +14,7 @@ The Qt style is prefered over java or c++
     /*! On one line detailed description */
     class Foo {
 
+    
     //! Foo short description  
     /*! 
       Multible lines description
@@ -21,6 +22,7 @@ The Qt style is prefered over java or c++
       which name is Foo
     */
     class Foo {
+
     
     //! function or public methods foo short description  
     /*!
@@ -33,16 +35,12 @@ The Qt style is prefered over java or c++
       \param parameter is explained
       \return type is explained
     */
-
     int foo(int parameter)
 
-1. list et
-2. list to 
-3. list tre
 
+    int variable; //!< Brief description after the member 
 
-int variable; //!< Brief description after the member 
-
-//! An enum.
-/*! More detailed enum description. */
-enum TEnum { 
+    
+    //! An enum.
+    /*! More detailed enum description. */
+    enum TEnum { 
