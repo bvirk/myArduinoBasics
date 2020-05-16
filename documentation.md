@@ -44,3 +44,14 @@ The Qt style is prefered over java or c++
     //! An enum.
     /*! More detailed enum description. */
     enum TEnum { 
+
+    
+#### Where and what
+Documentation goes in header files
+
+###### Order of importance's
+1. Interfaces - public og global function and classes
+2. privat functions if named signature not says all
+3. code comments that helps overview huge stuctures (eg. // end while)
+4. not obvious, in human mind, use of some expressions
+
