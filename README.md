@@ -1,25 +1,22 @@
-### Inital Arduino development steps
-The _why_ about subjects, that is felt needed to give the energi and focus of identity, is described in whyXXX.md files. 
-
-This README is a sequence of _what_.
+### A programmers initial Arduino steps
 
 
-### Installation
+### 1.8.9 on windows xp (presumeable last 32bit capable version)
 
-1.8.9 on windows xp. Having had an earlier version, the Arduino IDE zip was unpacked and registry values checked.
+- Having had an earlier version:
+    - Arduino IDE zip unpacked and registry values checked.
 
 ### Setup
 - IDE preferences
     - sketchbook folder
     - +verbose output
     - +external editor
-    - -check for update (no  internet)
+    - -check for update
     
 - Links in root of Sketchbook folder
-    - inlude files ( traced by Arduino.h )
-        - quote_inlude
-        - gcc_include
-        - avr_include
+    - root of roots of include files (arduino/, tools/) 
+        - hardware c:/programmer/arduino-1.8.9/hardware
+        - link from root of roots of include files back to sketchbook
     - arduino.exe
     - hyperterminal
         - emulering
@@ -31,11 +28,13 @@ This README is a sequence of _what_.
             - add newline
     - preferences
         - console.lines=20
+    - handsome documents
+    - ziped libraries
 
 
 ### Reading include files in Jedit Editor with plugin 'Error List'
 
-Macro cyberkis calls:
+A macro calls:
 
     void searchDirectories(String word, boolean useRegex, String [] dirs) {
         for (String dir : dirs) {				
