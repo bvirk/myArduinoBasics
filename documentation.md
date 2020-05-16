@@ -53,5 +53,7 @@ Documentation goes in header files
 1. Interfaces - public og global function and classes
 2. privat functions if named signature not says all
 3. code comments that helps overview huge stuctures (eg. // end while)
-4. not obvious, in human mind, use of some expressions
+4. in human mind
+    - not obvious evaluated expressions.
+    - easy forgotten chained conclussion
 
