@@ -29,7 +29,7 @@
     - preferences
         - console.lines=20
     - handsome documents
-    - zipped libraries
+    -  tzipped libraries
 
 
 ### Reading include files in Jedit Editor with plugin 'Error List'

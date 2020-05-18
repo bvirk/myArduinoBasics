@@ -55,5 +55,5 @@ Documentation goes in header files
 3. code comments that helps overview huge stuctures (eg. // end while)
 4. in human mind
     - not obvious evaluated expressions.
-    - easy forgotten chained conclussion
+    - easy forgotten chained conclusion
 
