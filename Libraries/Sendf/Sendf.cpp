@@ -63,7 +63,6 @@ char * (*toStr[])(double, uint8_t) = {dtostre,dtostrf};
   *	scientific vs decimal number
   */
 inline int8_t typeLengthPrecision(const char * fmt) {
-#define DOUBLE_DEFAULT_PRECISION 2
     if (*fmt == '%')
         if (*(fmt+1) =='e' || *(fmt+1) =='f')
             return DOUBLE_DEFAULT_PRECISION |  (*(fmt+1) =='f' ? 0x50 : 0x10);

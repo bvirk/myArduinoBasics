@@ -3,6 +3,9 @@
 #define Sendf_h
 #include <WString.h>
 
+#define DOUBLE_DEFAULT_PRECISION 2
+
+
 //! Serial 'printf' for NON float and NON double arguments. 
 /*!
   A fixed buffer af length 0x40 bytes is used - the formatted stream will maximal be 0x3f bytes long. Care is taken not to overflow, 
