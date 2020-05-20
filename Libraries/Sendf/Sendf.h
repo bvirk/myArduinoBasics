@@ -4,7 +4,7 @@
 #include <WString.h>
 
 #define DOUBLE_DEFAULT_PRECISION 2
-
+#define FP(pgmVar) (reinterpret_cast<const __FlashStringHelper *>(pgmVar))
 
 //! Serial 'printf' for NON float and NON double arguments. 
 /*!
