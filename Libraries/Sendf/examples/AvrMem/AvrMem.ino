@@ -1,10 +1,13 @@
 #include "Sendf.h"
 #include "Utils.h"
+#include <avr/pgmspace.h>
+
 
 extern unsigned int __data_start;
 extern unsigned int __data_end;
 extern unsigned int __bss_start;
 extern unsigned int __bss_end;
+
 
 void setup() {
 	Serial.begin(115200);
@@ -16,7 +19,7 @@ void setup() {
 	Utils::hexdump(reinterpret_cast<const char *>(&__data_start),data_size);
 	sendf(F("\nbss dump\n"));
 	Utils::hexdump(reinterpret_cast<const char *>(&__bss_start),bss_size);
-	sendff(F("the number PI equals something near %.7f\n"),22.0/7);
+	
 }
 
 void loop() { }
