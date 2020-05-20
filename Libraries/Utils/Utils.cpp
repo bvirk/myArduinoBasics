@@ -37,5 +37,17 @@ namespace Utils {
 			sendf(F(" |%s|\n"),ascii);
 		}
 	}
+	int8_t strcmp_PP(PGM_P s1, PGM_P s2) { 
+		uint8_t b1 = 1;
+		uint8_t b2 = 1;
+		s1--;
+		s2--;
+		while (b1 && b2 && b1 == b2) {
+			b1 = pgm_read_byte(++s1);
+			b2 = pgm_read_byte(++s2);
+		}
+		return b1-b2;
+	}
+
 
 };

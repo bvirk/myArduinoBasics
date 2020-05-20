@@ -1,18 +1,14 @@
 #ifndef Utils_h
 #define Utils_h
 #include <stdint-gcc.h>
-namespace Utils {
-	/*! Hexidecimal bytewide dump of ram memory
-	  \param p point to lowest memory address which content is showed
-	  \param size is length of memory be showed
-	  */
-    void hexdump(const void *p, uint16_t size);
+#include <avr/pgmspace.h>
 
+//! Some Utilities might reflect unfamiliarity with Arduino libraries and standard solutions.
+namespace Utils {
+	void hexdump(const void *p, uint16_t size);
+	void eepromDump(uint16_t start, uint16_t length);
 	
-    /*! Hexidecimal bytewide dump of EEPROM memory
-	  \param start is lowest memory address which content is showed
-	  \param lenght is size of memory be showed
-	  */
-    void eepromDump(uint16_t start, uint16_t length);
+	//! compare two strings in program space 
+	int8_t strcmp_PP(PGM_P s1, PGM_P s2);
 };
 #endif
