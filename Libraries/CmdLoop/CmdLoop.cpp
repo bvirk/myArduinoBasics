@@ -5,6 +5,7 @@
 	
 const uint32_t defaultDelay=1000;
 int8_t pin13State=0;
+PGM_P CmdLoop::autoExec;
 
 	
 
@@ -13,15 +14,19 @@ int8_t pin13State=0;
   * invoked by named equality of argv[0] 
   */
 
-  CmdLoop::CmdLoop( CommandFunc * cmdFunc, uint8_t commandsCount, void (*tslice[])(CmdLoop &), uint8_t tsliceCount) 
-  	: cmdFuncs(cmdFunc),cmdsCount(commandsCount),forRepeatSaved('\0')
-  	,sliceDelay(defaultDelay),timeSlices(tslice),timeSlicesCount(tsliceCount),timeSliceIndex(0){
-	sliceStart = millis();
+  CmdLoop::CmdLoop( CommandFuncBox & cmdFuncBox, void (*tslice[])(CmdLoop &), uint8_t tsliceCount 
+  	) : cmdFuncs(cmdFuncBox.commands),cmdsCount(cmdFuncBox.size),forRepeatSaved('\0')
+  	,sliceDelay(defaultDelay),timeSlices(tslice),timeSlicesCount(tsliceCount),timeSliceIndex(0)
+  	{
+  	sliceStart = millis();
 	argv[0]=command;
 	
 }
 
-
+static const __FlashStringHelper * CmdLoop::version() {
+	return F("command loop v0.3\n");
+}
+	
 inline void CmdLoop::getCmdAndTimeSlice() {
 	uint8_t cmdNPos=0;
 	while (true) {
@@ -83,20 +88,24 @@ void CmdLoop::prev() {
 	timeSliceIndex=timeSlicesCount-1;
 }
 
-void CmdLoop::loop() {
-	PGM_P autoExec = reinterpret_cast<PGM_P>(F("autoexec"));
-	strcpy_P(command,autoExec);
-	argc=1;
+void CmdLoop::loop(const __FlashStringHelper *autoEx) {
+	CmdLoop::autoExec = reinterpret_cast<PGM_P>(autoEx);
+	if (strlen_P(autoExec)) {
+		strcpy_P(command,autoExec);
+		argc=1;
+	}
 	while (true) {
 		uint8_t cmdsPos;
 		for (cmdsPos=0; cmdsPos < cmdsCount; cmdsPos++)
-		  if (strcmp(argv[0],cmdFuncs[cmdsPos].name)==0) {
+		  if (strcmp_P(argv[0],cmdFuncs[cmdsPos].name)==0) {
 		  	  exitLevel = (cmdFuncs[cmdsPos].f)(argc,argv);
 		  	  sendf(F(" %d\n"),exitLevel);
 		  	  break;
 		  }
-		if (cmdsPos == cmdsCount && strcmp_P(argv[0],autoExec))
+		if (cmdsPos == cmdsCount && strcmp_P(argv[0],CmdLoop::autoExec))
 			sendf(F("Command not found: %s\n"),command );
 		getCmdAndTimeSlice();
 	}
 }
+
+void CmdLoop::loop() { loop(F("")); }
