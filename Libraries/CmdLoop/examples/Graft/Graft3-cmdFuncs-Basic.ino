@@ -1,16 +1,12 @@
+//! Function description in CommandFuncBox::CommandFuncBox()
+
 namespace cmdFuncs {
 	
-	/** 
-	  * version of this precious mechanism 
-	  */
 	int8_t  ver(int argc, char* argv[]) {
-		sendf(F("command loop v0.1\n"));
+		sendf(CmdLoop::version());
 		return 0;
 	}
 	
-	/**
-	 * Argumens retrievement like in c++'s main on a Desktop computer.
-	 */
 	int8_t printArgs(int argc, char* argv[]) {
 		for (uint8_t i = 0; i < argc; i++)
 			sendf(F("%d: >%s<\n"),i,argv[i]);
