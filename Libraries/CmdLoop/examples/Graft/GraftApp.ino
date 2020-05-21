@@ -178,7 +178,7 @@ CommandFuncBox::CommandFuncBox() : size(NUM_COMMANDS) {
 
 	// KEEPS AUTOEXEC AS LAST    
 							//! auto executed on startup.
-	)) PUTF(14) autoexec		,F("autoexec" 		
+	)) PUTF(13) autoexec		,F("autoexec" 		
 	));
 }
 
