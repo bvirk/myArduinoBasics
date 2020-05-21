@@ -17,19 +17,19 @@ class TimedErrorLog {
 	int8_t errNr;				//!< setted by setError and cleared by construction with parameter timestamp
 	uint32_t secAtError: 24;	//!< seconds adjustment to secSReset that indicates time of error.
 	
-	uint32_t secOfYear(uint8_t yy, uint8_t mo, uint8_t dd, uint8_t hh, uint8_t mi, uint8_t *pMonlen);
+	static uint32_t secOfYear(uint8_t yy, uint8_t mo, uint8_t dd, uint8_t hh, uint8_t mi, uint8_t *pMonlen);
   	enum twoDecimalDigits {SS=0,NN,HH,DD,MM,YY};
 
-public: 	
   	//! Reestablish that object EEPROM contains  
     TimedErrorLog();
-    
-    
+    static TimedErrorLog & instance();
+public: 	
+  	
     //! Construct an object from a timestamp
     /*!
       \param timestamp is a ten digit integer with format yymmddhhnn (n=mi_n_uts)
       */
-  	TimedErrorLog(uint32_t timestamp);
+  	static void setTime(uint32_t timestamp);
   	
   	
   	enum showmode {SETTEDTIME,NOW,ERROR};
@@ -43,15 +43,16 @@ public:
   	  - ERROR
   	  and reflects respectively time of construction, current time and time of logged error
   	  */
-  	bool show(showmode show);
+  	static bool show(showmode show);
   	
   	
   	//! Set the error number
-  	void setError(int errorNr);
+  	static void setError(int errorNr);
   	
   	//! Get the error number.
-  	int8_t getError(); 
+  	static int8_t getError(); 
 };
 
+#define error TimedErrorLog::getError()
 #endif
 
