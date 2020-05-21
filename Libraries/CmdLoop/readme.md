@@ -19,13 +19,13 @@ An arduino solves jobs dealing with reading sensors and controlling attached ele
 We use libraries which dependts on interrupt. The most simple OS, is to avoid interrupt at the level where we ties things together, and just extend the loop with millis() value dependt branching in code. I made a mechanism with function called slices that have the responsible to 'pass the baton on' for next slice getting thread of execution on next millis() value dependt invocation in main loop. The slice can adjust the delay formed by the value millis() compares to in main loop. Slices is an array of function pointers and sceduling goes in ring when each time calls next() as last statement.
 
 
+I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run. It has relevans about the way i have implemented error logging.
+
+
 Error conditions can occur and includes, on an Arduino, all from hardware conditions to programming error. No room for c++ exceptions on a 2k bytes ram device and no user to take verbose action when Arduino solves it mechanical job.
 
 
-I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run.
-
-
-Going on, about error, the simplest is a one time denoted error code. It can be registrated because a timestamp has been sendt from terminal and it can not be overwritten before a new timestamp is sendt. It survives reset, as opposed to time readout, with an intact time of the error number that was set. It uses 11 bytes of EEPROM and would, if the numbers of registated error events should be more than one, use 4 bytes more for each error.
+The simplest is a single error with a number. It can be registrated because a timestamp has been sendt from terminal and it can not be overwritten before a new timestamp is sendt. It survives reset, as opposed to time readout, with an intact time of when the error number that was set. It uses 11 bytes of EEPROM and would, if the numbers of registated error events should be more than one, use 4 bytes more for each error.
 
 
 Some sort of signaling an error must be performed. The 'blink' led on pin13 is reserved that use. The blink led is given a double information job, by signaling 'all is good' by a slow steady blinking - an indication of that thread of execution travels through those array of function pointers that forms slices.     
