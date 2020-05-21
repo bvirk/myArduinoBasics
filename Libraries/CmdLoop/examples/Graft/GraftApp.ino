@@ -1,4 +1,11 @@
-
+//! Command functions
+/*!
+  Syntax of each function is in CommandFuncBox::CommandFuncBox() below
+  Macro NUM_COMMANDS has to be manually edited when inserting and removing commands.
+  Having autoExec sending some info and being the last in CommandFuncBox::CommandFuncBox() 
+  shows visual on start in terminal that NUM_COMMANDS made room for all initialized CommandFunc objects.
+  If it is too small, memory will be corrupted - if it is too big, that amount time 4 bytes is wasted in bss segment.
+*/
 namespace cmdFuncs {
 
 	int8_t showTime(int argc, char* argv[]) {
@@ -93,6 +100,8 @@ namespace cmdFuncs {
 	int8_t autoexec(int argc, char* argv[]) {
 		TimedErrorLog ts;
 		slices::onTime = ts.getError() ? 100 : 2000;
+		sendf(CmdLoop::version());
+		sendf(F("Use list to see all commands\n"));
 		return 0;
 	}
 	
@@ -103,7 +112,7 @@ namespace cmdFuncs {
 	}
 };
 
-
+//! EDIT THIS WHEN INSERTING/REMOVING COMMANDS - ONE MORE THEN LAST INDEX OF PUTF
 #define NUM_COMMANDS 14
 
 CommandFunc CommandFuncBox::commands[NUM_COMMANDS];
@@ -124,52 +133,52 @@ namespace cmdFuncs {
 
 CommandFuncBox::CommandFuncBox() : size(NUM_COMMANDS) {	
 
-#define PUTF ;commands[i++].init(cmdFuncs:: 
+#define PUTF(num) ;commands[num].init(cmdFuncs:: 
 
-	int i=0;
 	
-	PUTF ver				,F("ver"
+	PUTF(0) ver				,F("ver"
 		  
 							//! demo of printing arguments
-	)) PUTF printArgs,		F("printargs" // [arg [...]]
+	)) PUTF(1) printArgs,		F("printargs" // [arg [...]]
 	
 							//! set blink on pin13 in milleseconds
-	)) PUTF blink			,F("blink" // ontime offtime
+	)) PUTF(2) blink			,F("blink" // ontime offtime
 	
 							//! reads 8 bit unit from EEPROM - address in hex
-	)) PUTF r8				,F("r8" // address
+	)) PUTF(3) r8				,F("r8" // address
 
 							//! writes 8 bit unit to EEPROM - address and value in hex
-	)) PUTF w8				,F("w8" // address value
+	)) PUTF(4) w8				,F("w8" // address value
 
 							//! reads 16 bit unit from EEPROM - address in hex	
-	)) PUTF r16				,F("r16" // address
+	)) PUTF(5) r16				,F("r16" // address
 		
 							//! writes 16 bit unit to EEPROM - address and value in hex
-	)) PUTF w16				,F("w16" // address value
+	)) PUTF(6) w16				,F("w16" // address value
 		
 							//! heximal dump of, if no arguments given, entire, EEPROM. address and length in hex 
-	)) PUTF EEDump			,F("eedump" // [address [length]]
+	)) PUTF(7) EEDump			,F("eedump" // [address [length]]
 		
 							//! puts a 32 bit timestamp in EEPROM. The timestamp is an integer which digits is yymmddhhnn
 							//! eg. 2005121330 for time of day 13:30 on maj the 12' year 2020. 
-	)) PUTF setTime			,F("settime" // timestamp
+	)) PUTF(8) setTime			,F("settime" // timestamp
 		
 							//! shows timestamp in EEPROM. The showing, when optional argument now is used, is, 
 							//! for obvious reasons, not true after a reset.	
-	)) PUTF showTime		,F("showtime" // [now]
+	)) PUTF(9) showTime		,F("showtime" // [now]
 		
 							//! shows all commands
-	)) PUTF list			,F("list" // value		
+	)) PUTF(10) list			,F("list" // value		
 
 							//! sets an error value in range {-128 ... 127}
-	)) PUTF setError		,F("seterror" // value
+	)) PUTF(11) setError		,F("seterror" // value
 		
 							//! For testing
-	)) PUTF schnellStart	,F("ss"  		
+	)) PUTF(12) schnellStart	,F("ss"  		
 
-							//! auto executed on startup
-	)) PUTF autoexec		,F("autoexec" 		
+	// KEEPS AUTOEXEC AS LAST    
+							//! auto executed on startup.
+	)) PUTF(14) autoexec		,F("autoexec" 		
 	));
 }
 
@@ -183,8 +192,6 @@ CmdLoop cmdLoop(
 void setup() {
 	Serial.begin(115200);
 	pinMode(13,OUTPUT);
-	sendf(CmdLoop::version());
-	sendf(F("Use list to see all commands\n"));
 	cmdLoop.loop(F("autoexec"));
 }
 
