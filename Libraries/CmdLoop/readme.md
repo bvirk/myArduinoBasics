@@ -31,7 +31,7 @@ Due to that slices also has prev(), setDelay(uint32_t delay), and state preservi
 Seriel communication is part af that loop, but where slices is millis() value dependt invoked, the branching to instructions of recieving charaters of an arriving line is seleced by Serial.available(). You could say that the top main loop is program counter constantly tumbling around millis() value and Serial.available() dependt branching. 
 
 
-I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run. It has relevans about the way i have implemented error logging.
+I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run. It has relevans to the way i have implemented error logging.
 
 
 Error conditions can occur and includes, on an Arduino, all from hardware conditions to programming error. No room for c++ exceptions on a 2k bytes ram device and no user to take verbose action when Arduino solves it mechanical job.
