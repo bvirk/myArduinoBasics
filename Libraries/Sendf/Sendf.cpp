@@ -95,7 +95,7 @@ inline int8_t sendffCommon(const char * fmt, va_list args) {
             double dAbs = abs(d);
             int isFmtSpecF = precsn >> 6;
             uint8_t preci = precsn & 7;
-            if (isFmtSpecF && (dAbs > 9999999*pow(10,-preci) || dAbs < pow(10,preci-8)))
+            if (isFmtSpecF && dAbs != 0 && (dAbs > 9999999*pow(10,-preci) || dAbs < pow(10,preci-8)))
             	isFmtSpecF=0;
             char *flt =  (toStr[isFmtSpecF])(d,preci);
             int fltlen = strlen(flt);
