@@ -13,7 +13,7 @@ A simple scheme is make procedure like commands in linux terminal or windows con
 
 ##### In practice
 
-Terminal talking can be done in character or line unit. Because I chose line, and a simple dump terminal is used, a convenient 'repeat last' command (being a single dot) is implemented.
+Terminal talking can be done in character (with remote echo) or line unit. Because I chose line, and a simple dump terminal is used, a convenient 'repeat last' command (being a single dot) is implemented.
 
 
 An arduino solves jobs dealing with reading sensors and controlling attached electronics. That involves doing many things at the same time following some time involving logic.
