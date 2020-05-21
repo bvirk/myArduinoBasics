@@ -23,7 +23,9 @@ Error conditions can occur and includes, on an Arduino, all from hardware condit
 
 
 I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run.
-The simplest is a one time denoted error code. It can be registrated because a timestamp has been sendt from terminal and it can not be overwritten before a new timestamp is sendt. It survives reset, as opposed to time readout, with an intact time of the error number that was set. It uses 11 bytes of EEPROM and would, if the numbers of registated error events should be more than one, use 4 bytes more for each error.
+
+
+Going on, about error, the simplest is a one time denoted error code. It can be registrated because a timestamp has been sendt from terminal and it can not be overwritten before a new timestamp is sendt. It survives reset, as opposed to time readout, with an intact time of the error number that was set. It uses 11 bytes of EEPROM and would, if the numbers of registated error events should be more than one, use 4 bytes more for each error.
 
 
 Some sort of signaling an error must be performed. The 'blink' led on pin13 is reserved that use. The blink led is given a double information job, by signaling 'all is good' by a slow steady blinking - an indication of that thread of execution travels through those array of function pointers that forms slices.     
