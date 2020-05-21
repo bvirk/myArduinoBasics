@@ -25,6 +25,9 @@ We use libraries which dependts on interrupt. The most simple OS, is avoid inter
 In CmdLoop, I made a mechanism with slices that have the responsibility to 'pass the baton on' so that next slice gets thread of execution on next millis() value dependt invocation in main loop. The slice can adjust the delay formed by the value millis() compares to in the main loop. Slices is an array of function pointers and sceduling goes in ring when each slice calls next() as last statement.
 
 
+Due to that slices also has prev() and setDelay(uint32_t delay), they are, by use of (static) variables, virtual instructions of a virtual engine with adjustable clock frequency. 
+
+
 Seriel communication is part af that loop, but where slices is millis() value dependt invoked, the branching to instructions of recieving charaters of an arriving line is seleced by Serial.available(). You could say that the top main loop is program counter constantly tumbling around millis() value and Serial.available() dependt branching. 
 
 
