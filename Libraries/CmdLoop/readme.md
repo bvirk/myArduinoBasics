@@ -1,3 +1,5 @@
+##### Philosophy about CmdLoop
+
 A certain standpoint about user interfaces for devices like arduino shall here be preached. Prior in history such things would not have worked without buttons or keyboard as input and some visual output. Today things has a serial connection - wired or air carried. Buttons and screens costs as hardware, design and programming time.
 
 
@@ -9,6 +11,7 @@ Such an interface has the benefit of potentially being a brick in a bigger syste
 
 A simple scheme is make procedure like commands in linux terminal or windows console. Main functions taken array of strings as parameter and returning an exit level. A configuration can make it choiceable to call an autoexec command after reset. 
 
+##### In practice
 
 Terminal talking can be done in character or line unit. Because I chose line, and a simple dump terminal is used, a convenient 'repeat last' command (being a single dot) is implemented.
 
