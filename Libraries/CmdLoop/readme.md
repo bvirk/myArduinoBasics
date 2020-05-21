@@ -34,7 +34,7 @@ Seriel communication is part af that loop, but where slices is millis() value de
 I have the idea that an Arduino application shall be reset robust - in other words - a reset must have a predictet place in the big run. It has relevans to the way i have implemented error logging.
 
 
-Error conditions can occur and includes, on an Arduino, all from hardware conditions to programming error. No room for c++ exceptions on a 2k bytes ram device and no user to take verbose action when Arduino solves it mechanical job.
+Error conditions can occur and includes, on an Arduino, all from hardware conditions to programming error. No room for c++ exceptions on a 2k bytes ram device and no user to take verbose action when Arduino controls mechanical job.
 
 
 The simplest is a single error with only a number as error cause identification. It can be registrated because a timestamp has been sendt from terminal and it can not be overwritten before a new timestamp is sendt. It survives reset, as opposed to time readout, with an intact time of when the error number was set. It uses 11 bytes of EEPROM and would, if the numbers of registated error events should be more than one, use 4 bytes more for each persistent error.
