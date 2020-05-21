@@ -1,4 +1,4 @@
-A certain standpoint about user interfaces for devices like arduino shall here be preached. Prior in history such things would not have worked without buttons or keyboard as input and some visual output. Today things has a serial connection - wired og air carried. Buttons and screens costs as hardware, design and programing time.
+A certain standpoint about user interfaces for devices like arduino shall here be preached. Prior in history such things would not have worked without buttons or keyboard as input and some visual output. Today things has a serial connection - wired og air carried. Buttons and screens costs as hardware, design and programming time.
 
 
 When programming a microprocessor in c/c++, the function is the name of the elementary composed action. Remoted procedure calls is calling such a brick remotely.
@@ -16,7 +16,7 @@ Terminal talking can be done in character or line unit. Because I chose line, an
 An arduino solves jobs dealing with reading sensors and controlling attached electronics. That involves doing many things at the same time following some time involving logic.
 
 
-We use libraries which dependts on interrupt. The most simple OS, is to avoid interrupt at the level where we ties things together is just extending the loop with millis() value dependt branching in code. I made a mechanism with function called slices that have the responsible to 'pass the baton on' for next slice getting thread of execution on next millis() value dependt invocation in main loop. The slice can adjust the delay formed by the value millis() compares to in main loop. Slices is an array of function pointers and sceduling goes in ring when each time calls next() at last statement.
+We use libraries which dependts on interrupt. The most simple OS, is to avoid interrupt at the level where we ties things together, and just extends the loop with millis() value dependt branching in code. I made a mechanism with function called slices that have the responsible to 'pass the baton on' for next slice getting thread of execution on next millis() value dependt invocation in main loop. The slice can adjust the delay formed by the value millis() compares to in main loop. Slices is an array of function pointers and sceduling goes in ring when each time calls next() at last statement.
 
 
 Error conditions can occur and includes on an Arduino all from hardware conditions to programming error. No room for c++ exceptions on a 2k bytes ram device and no user to take verbose action when Arduino solves it mechanical job.
