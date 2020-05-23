@@ -1,12 +1,14 @@
 #ifndef Templates_h
 #define Templates_h
 
+// This library is free software; you can redistribute it and/or 
+// modify it under the terms of the GNU Lesser General Public 
+// License as published by the Free Software Foundation; either 
+// version 2.1 of the License, or (at your option) any later version.
+
 #include <EEPROM.h>
 
 /*!
-  As a programmer, it is unwise to be burdened to remeber
-  dependencies of copied/pasted copies of anything defined
-  
   It seems function template definitions has to be contained in
   every compilation unit - makes sense it uses defintion to compile 
   the actual types.
