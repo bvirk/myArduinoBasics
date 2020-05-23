@@ -57,6 +57,8 @@ Documentation goes in header files
     - not obvious evaluated expressions.
     - easy forgotten chained conclusion
 
+### Summery practice
+
 #### Uniform libraries
 
 ###### In header of library Foo (Foo.h)
@@ -67,3 +69,12 @@ Documentation goes in header files
     // modify it under the terms of the GNU Lesser General Public
     // License as published by the Free Software Foundation; either
     // version 2.1 of the License, or (at your option) any later version.
+
+#### Case of directories and files
+
+- Library folder
+    - leading uppercase
+- Source files (.h and .cpp)
+    - leading uppercase
+- namespaces
+    - all lowercase
