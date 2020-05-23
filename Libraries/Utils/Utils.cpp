@@ -2,12 +2,24 @@
 #include <Sendf.h>
 #include <EEPROM.h>
 
-namespace Utils {
-	void hexdump(const void *p, uint16_t size)  {
-		sendf(F("Address    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n"));
+namespace utils {
+	
+	uint8_t readPGM(unsigned int p) {
+		return pgm_read_byte(p);
+	}
+	uint8_t readDATA(unsigned int p) {
+		return *(uint8_t *)p;
+	}
+	uint8_t readEEPROM(unsigned int p) {
+		return EEPROM.read(p);
+	}
+	
+	void hexdump(const void *p, uint16_t size,uint16_t memHigestAddrBitMask, uint8_t (*content)(unsigned int address),__FlashStringHelper * typeLabel)  {
+		sendf(typeLabel);
+		sendf(F("0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n"));
 		char ascii[0x11];
 		ascii[0x10]='\0';
-		for (unsigned int lineStart = (unsigned int)p & 0xfff0; lineStart < (unsigned int)p+size; lineStart += 0x10) {
+		for (unsigned int lineStart = (unsigned int)p & memHigestAddrBitMask; (lineStart < (unsigned int)p+size) && (lineStart < memHigestAddrBitMask); lineStart += 0x10) {
 			//printHex(lineStart,8,": ");
 			sendf(F("%.8x: "),lineStart);
 			for (int8_t col=0; col < 0x10; col++) 
@@ -15,28 +27,20 @@ namespace Utils {
 					sendf(F(" . "));
 					ascii[col]='.';
 				} else {
-					uint8_t dumpCh = *(uint8_t *)(lineStart+col);
+					//uint8_t dumpCh = *(uint8_t *)(lineStart+col);
+					uint8_t dumpCh = (content)(lineStart+col);
 					sendf(F("%.2x "),dumpCh);
 					ascii[col] = dumpCh < 0x20 ? '.' : dumpCh;
 				}
 			sendf(F(" |%s|\n"),ascii);
 		}
 	}
-	void eepromDump(uint16_t start, uint16_t length) {
-		sendf(F("Address    0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n"));
-		char ascii[0x11];
-		ascii[0x10]='\0';
-		for (uint16_t lineStart = start & 0x3f0; (lineStart < 0x400) && (lineStart < start+length); lineStart += 0x10) {
-			//printHex(lineStart,8,": ");
-			sendf(F("%.8x: "),lineStart);
-			for (int8_t col=0; col < 0x10; col++) { 
-					uint8_t dumpCh = EEPROM.read(lineStart+col);
-					sendf(F("%.2x "),dumpCh);
-					ascii[col] = dumpCh < 0x20 ? '.' : dumpCh;
-				}
-			sendf(F(" |%s|\n"),ascii);
-		}
-	}
+	void dataHexdump(const void *p, uint16_t size)  { hexdump(p,size,0x7ff,readDATA,F("DATA Addr  ")); }
+	
+	void pgmHexdump(const void *p, uint16_t size)  { hexdump(p,size,0x7fff,readPGM  ,F("PGM Addr   ")); }
+	
+	void eepromHexdump(uint16_t start, uint16_t length) { hexdump(start,length,0x3ff,readEEPROM,F("EEPROM add ")); }
+	
 	int8_t strcmp_PP(PGM_P s1, PGM_P s2) { 
 		uint8_t b1 = 1;
 		uint8_t b2 = 1;
