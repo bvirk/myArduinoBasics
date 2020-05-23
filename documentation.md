@@ -78,3 +78,7 @@ Documentation goes in header files
     - leading uppercase
 - namespaces
     - all lowercase
+    
+#### "" vs <> around include files
+
+All files, included those in Libraries folders, which resides below Sketchbook are "" surrounded.
