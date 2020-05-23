@@ -81,4 +81,4 @@ Documentation goes in header files
     
 #### "" vs <> around include files
 
-All files, included those in Libraries folders, which resides below Sketchbook are "" surrounded.
+All file refs, included those in Libraries folders, which resides below Sketchbook are "" surrounded.
