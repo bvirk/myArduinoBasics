@@ -1,10 +1,20 @@
+// This library is free software; you can redistribute it and/or 
+// modify it under the terms of the GNU Lesser General Public 
+// License as published by the Free Software Foundation; either 
+// version 2.1 of the License, or (at your option) any later version.
+
 #include "TimedErrorLog.h"
 #include "Templates.h"
 #include <wiring.c>
 #include "Sendf.h"
 
+namespace slices {
+extern uint16_t onTime;
+};
+
 TimedErrorLog::TimedErrorLog() {
 	EEPROMRead<TimedErrorLog>(TIMED_ERROR_LOG_ADDRESS,*this);
+	slices::onTime = errNr ? 100 : 2000;
 }
 
 static TimedErrorLog & TimedErrorLog::instance() {
@@ -15,12 +25,14 @@ static TimedErrorLog & TimedErrorLog::instance() {
 static void TimedErrorLog::setTime(uint32_t timestamp) { 
 	TimedErrorLog & me = instance();
 	me.secSReset = millis()/1000;
+	me.secAtError = me.secSReset;
 	me.dateTime = timestamp;
 	me.errNr=0;
+	slices::onTime=2000;
 	EEPROMWrite(TIMED_ERROR_LOG_ADDRESS,me);
 }
 
-static inline uint32_t TimedErrorLog::secOfYear(uint8_t yy, uint8_t mo, uint8_t dd, uint8_t hh, uint8_t mi,uint8_t *pmonlen) {
+inline uint32_t TimedErrorLog::secOfYear(uint8_t yy, uint8_t mo, uint8_t dd, uint8_t hh, uint8_t mi,uint8_t *pmonlen) {
 	*(pmonlen+1) = yy % 4 == 0 ? 29 : 28;
 	uint16_t days = dd;
 	while (mo > 1) 
@@ -47,12 +59,12 @@ static bool TimedErrorLog::show(showmode show) {
 						 && dd[HH] < 24 && dd[NN] < 60;		
 
 	if (show != SETTEDTIME && validDateTime) {
-		uint32_t soy = secOfYear(dd[YY],dd[MM],dd[DD],dd[HH],dd[NN],monlen) + (show == NOW	? millis()/1000 : me.secAtError) - me.secSReset;
+		uint32_t soy = me.secOfYear(dd[YY],dd[MM],dd[DD],dd[HH],dd[NN],monlen) + (show == NOW	? millis()/1000 : me.secAtError) - me.secSReset;
 		uint32_t secOfSettedYear = 24L*60*60*(dd[YY] % 4 == 0 ? 366 : 365); //! setted on constructon - leap year awareness
 		if ( soy > secOfSettedYear) {
 			dd[YY]++;
 			soy -= secOfSettedYear;
-			monlen[1] = dd[YY] % 4 == 0 ? 29 : 28;	//! no thread safeness of saving in static monlen.
+			monlen[1] = dd[YY] % 4 == 0 ? 29 : 28;	
 		}
 		uint8_t modulus[] = {60,60,24};
 		for (uint8_t i=0; i<3; i++) {
@@ -77,16 +89,23 @@ static bool TimedErrorLog::show(showmode show) {
 	return validDateTime;
 }
 
-static void TimedErrorLog::setError(int errorNr) {
-	TimedErrorLog & me = instance();
-	if (me.errNr == 0) {
-		me.errNr = errorNr;
-		me.secAtError = millis()/1000-me.secSReset;
-		sendf("now writting error: %d\n",me.errNr);
-		EEPROMWrite(TIMED_ERROR_LOG_ADDRESS,me);
+int8_t TimedErrorLog::operator = (short errorNr) {
+	if (errNr == 0) {
+		slices::onTime=100;
+		errNr = errorNr;
+		secAtError = millis()/1000-secSReset;
+		EEPROMWrite(TIMED_ERROR_LOG_ADDRESS,*this);
 	}
+	return errNr;
 }
 
-static int8_t TimedErrorLog::getError() {
-	return instance().errNr;
+TimedErrorLog::operator bool() const {
+	return errNr!=0;
 }
+
+TimedErrorLog::operator short() const {
+	return errNr;
+}
+
+TimedErrorLog & error=TimedErrorLog::instance();
+
