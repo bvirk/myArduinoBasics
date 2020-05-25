@@ -1,3 +1,8 @@
+// This library is free software; you can redistribute it and/or 
+// modify it under the terms of the GNU Lesser General Public 
+// License as published by the Free Software Foundation; either 
+// version 2.1 of the License, or (at your option) any later version.
+
 #include "Arduino.h"
 #include "CmdLoop.h"
 #include "Sendf.h"
@@ -23,10 +28,6 @@ PGM_P CmdLoop::autoExec;
 	
 }
 
-static const __FlashStringHelper * CmdLoop::version() {
-	return F("command loop v0.3\n");
-}
-	
 inline void CmdLoop::getCmdAndTimeSlice() {
 	uint8_t cmdNPos=0;
 	while (true) {
