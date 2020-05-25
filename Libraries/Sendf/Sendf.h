@@ -1,7 +1,13 @@
-
 #ifndef Sendf_h
 #define Sendf_h
 #include <WString.h>
+
+// This library is free software; you can redistribute it and/or 
+// modify it under the terms of the GNU Lesser General Public 
+// License as published by the Free Software Foundation; either 
+// version 2.1 of the License, or (at your option) any later version.
+
+#define SENDLIBVERSION "0.1.0"
 
 #define DOUBLE_DEFAULT_PRECISION 2
 #define FP(pgmVar) (reinterpret_cast<const __FlashStringHelper *>(pgmVar))
