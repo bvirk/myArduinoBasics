@@ -67,8 +67,11 @@ when invoked with marked string of characters, by:
 - TimedErrorLog
 
 
-### Links
+### Links links added
 
 - [every mans doc](https://www.arduino.cc/reference/en/)
 - [avr-libc](https://www.nongnu.org/avr-libc/user-manual/modules.html)
 - [Question about memory allocation analysis](https://arduino.stackexchange.com/questions/52921/question-about-memory-allocation-analysis?rq=1)
+- [Arduino Uno Pinout](https://www.circuito.io/blog/arduino-uno-pinout/)
+- [Other IDE usage with MAKE](https://pragprog.com/magazines/2011-04/advanced-arduino-hacking)
+- [C-Programmers do patterns similar to try/catch](http://www.on-time.com/ddj0011.htm)
