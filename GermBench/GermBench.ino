@@ -12,7 +12,7 @@
 #define TEMPERATURE_PRECISION 9
 #define EARTH_SERIAL 0x8102162CBF22EE28
 #define AIR_SERIAL   0x36021616B726EE28
-#define DS1822_DEVICE_COUNT 2
+#define DS1820_DEVICE_COUNT 2
 
 enum {ERROR_READ_DS18B22_DEVICE=1,ERROR_DALLASTEMPERATURE_GETADDRESS};
 
@@ -33,7 +33,7 @@ float  fanSwitchTemp;
 #define HEAT_OFF 0
 
 int8_t address64Index(uint64_t addr) {
-	for (int8_t i=0; i < DS1822_DEVICE_COUNT;i++) 
+	for (int8_t i=0; i < DS1820_DEVICE_COUNT;i++) 
 		if (*(uint64_t*)&devAddr[i] == addr )
 			return i;
 	error = ERROR_READ_DS18B22_DEVICE;

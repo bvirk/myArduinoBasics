@@ -56,7 +56,7 @@ namespace cmdFuncs {
 
 	int8_t ds18b20(int argc, char* argv[]) {
 		
-    	for (int i=0; i < DS1822_DEVICE_COUNT; i++)
+    	for (int i=0; i < DS1820_DEVICE_COUNT; i++)
     		// would be lie to claim I don't experimentet with that format specifier! - llx=bogus
     		sendf("device %d: has address: %lx%lx\n",i,*((uint32_t *)devAddr[i]+1),*(uint32_t *)devAddr[i]);
     	return 0;
@@ -149,7 +149,7 @@ void setup() {
 	pinMode(FAN_CONTROL_PIN, OUTPUT);
 	pinMode(HEAT_CONTROL_PIN, OUTPUT);
 	sensors.begin();
-	for (uint8_t i=0; i < DS1822_DEVICE_COUNT; i++)
+	for (uint8_t i=0; i < DS1820_DEVICE_COUNT; i++)
 	if (!sensors.getAddress(devAddr[i], i)) {
 	  sendf(F("Unable to find address for Device %d\n"),i);
 	  error = ERROR_DALLASTEMPERATURE_GETADDRESS;
