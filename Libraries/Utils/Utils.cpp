@@ -24,7 +24,7 @@ namespace utils {
 		sendf(F("0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F\n"));
 		char ascii[0x11];
 		ascii[0x10]='\0';
-		for (unsigned int lineStart = (unsigned int)p & memHigestAddrBitMask; (lineStart < (unsigned int)p+size) && (lineStart < memHigestAddrBitMask); lineStart += 0x10) {
+		for (unsigned int lineStart = (unsigned int)p & memHigestAddrBitMask & 0xfff0; (lineStart < (unsigned int)p+size) && (lineStart < memHigestAddrBitMask); lineStart += 0x10) {
 			//printHex(lineStart,8,": ");
 			sendf(F("%.8x: "),lineStart);
 			for (int8_t col=0; col < 0x10; col++) 
