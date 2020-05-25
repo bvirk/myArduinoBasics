@@ -17,7 +17,7 @@ namespace slices {
 	*/  
 	void onBlinks(CmdLoop & cmdLoop) {
 		static uint8_t cntDown=5;        // 1.
-		digitalWrite(13,1 & cntDown);    // 2.
+		digitalWrite(LED_BUILTIN,1 & cntDown);    // 2.
 		if (onTime==100 && cntDown ) {   // 3.
 			cntDown--;                   // 4.
 			cmdLoop.setDelay(onTime);    // 5.
@@ -29,7 +29,7 @@ namespace slices {
 	}
 	
 	void offBlinks(CmdLoop & cmdLoop) {
-		digitalWrite(13,0);
+		digitalWrite(LED_BUILTIN,0);
 		cmdLoop.setDelay(offTime);
 		cmdLoop.next();
 	}
